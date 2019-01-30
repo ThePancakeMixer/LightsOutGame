@@ -1,9 +1,11 @@
 package com.example.app_demo_testing;
 
 import android.graphics.Point;
+import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -36,9 +38,31 @@ public class MainActivity extends AppCompatActivity {
                 index++;
             }
         }
-        gameGrid.setUp();
+
+        if(savedInstanceState!=null)
+            Log.v("state","exists");
+        else
+            Log.v("state","no exists");
+
+        if(savedInstanceState==null){
+            gameGrid.setUp();
+        }
+        else {
+            String state = savedInstanceState.getString("state");
+            gameGrid.restoreState(state);
+        }
+
         PaintGrid();
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("state",gameGrid.getState());
+
+    }
+
 
     public void PaintGrid(){
         for(int i=0;i<3;i++){
@@ -51,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 
     public void Toggle(View view) {

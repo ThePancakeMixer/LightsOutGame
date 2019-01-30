@@ -28,6 +28,29 @@ public class Grid {
         moves = 0;
     }
 
+    public String getState(){
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                sb.append(grid[i][j]?'T':'F');
+            }
+        }
+        return sb.toString();
+    }
+
+    public void restoreState(String input){
+        int char_index = 0;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(input.charAt(char_index)=='T')
+                    grid[i][j] = true;
+                else
+                    grid[i][j] = false;
+                char_index++;
+            }
+        }
+    }
+
 
     private final Point[] steps = {new Point(0,1) , new Point(1,0), new Point(-1,0) , new Point(0,-1),new Point(0,0)};
 
